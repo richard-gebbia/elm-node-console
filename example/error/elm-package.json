@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "summary": "Log examples for elm-node-console",
+    "summary": "Error examples for elm-node-console",
     "repository": "https://github.com/richard-gebbia/elm-node-console.git",
     "license": "BSD3",
     "source-directories": [

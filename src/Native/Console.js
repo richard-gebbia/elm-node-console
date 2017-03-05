@@ -38,10 +38,37 @@ var _richard_gebbia$elm_node_console$Native_Console = (function () {
         });
     }
 
+    function time(label) {
+        return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
+            console.time(label);
+            return callback(
+                _elm_lang$core$Native_Scheduler.succeed(
+                    _elm_lang$core$Native_Utils.Tuple0));
+        });
+    }
+
+    function timeEnd(label) {
+        return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
+            console.timeEnd(label);
+            return callback(
+                _elm_lang$core$Native_Scheduler.succeed(
+                    _elm_lang$core$Native_Utils.Tuple0));
+        });
+    }
+
+    function trace(message) {
+        return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
+            console.trace(message);
+            return callback(
+                _elm_lang$core$Native_Scheduler.succeed(
+                    _elm_lang$core$Native_Utils.Tuple0));
+        });
+    }
+
     function warn(value) {
         return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
-            console.error(value);
-            return warn(
+            console.warn(value);
+            return callback(
                 _elm_lang$core$Native_Scheduler.succeed(
                     _elm_lang$core$Native_Utils.Tuple0));
         });
@@ -52,6 +79,9 @@ var _richard_gebbia$elm_node_console$Native_Console = (function () {
         error: error,
         info: info,
         log: log,
+        time: time,
+        timeEnd: timeEnd,
+        trace: trace,
         warn: warn
     };
 })();

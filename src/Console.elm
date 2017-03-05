@@ -1,4 +1,4 @@
-module Console exposing (dir, dirWithOptions, DirOptions, defaultDirOptions, elmDir, elmDirWithOptions, error, errorAndFail, info, log, warn, warnAndFail)
+module Console exposing (dir, dirWithOptions, DirOptions, defaultDirOptions, elmDir, elmDirWithOptions, error, errorAndFail, info, log, time, timeEnd, warn, warnAndFail)
 
 import Native.Console
 import Json.Encode as Encode
@@ -78,7 +78,8 @@ as its error.
 errorAndFail : a -> Task a ()
 errorAndFail value =
     error value
-        |> Task.andThen (Task.fail value)
+        |> Task.mapError (\_ -> value)
+        |> Task.andThen (\_ -> Task.fail value)
 
 
 {-|
@@ -99,6 +100,21 @@ log value =
     Native.Console.log value
 
 
+time : String -> Task Never ()
+time label =
+    Native.Console.time label
+
+
+timeEnd : String -> Task Never ()
+timeEnd label =
+    Native.Console.timeEnd label
+
+
+trace : String -> Task Never ()
+trace message =
+    Native.Console.trace message
+
+
 {-|
 An alias for `error` when run in Node.
 When run in the browser, it performs similarly to `lof`, but usually
@@ -116,4 +132,5 @@ as its error.
 warnAndFail : a -> Task a ()
 warnAndFail value =
     warn value
-        |> Task.andThen (Task.fail value)
+        |> Task.mapError (\_ -> value)
+        |> Task.andThen (\_ -> Task.fail value)
