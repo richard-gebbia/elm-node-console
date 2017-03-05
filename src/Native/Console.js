@@ -1,14 +1,12 @@
 var _richard_gebbia$elm_node_console$Native_Console = (function () {
 
-    function dir(value) {
-        return function (options) {
-            return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
-                console.dir(value, options);
-                return callback(
-                    _elm_lang$core$Native_Scheduler.succeed(
-                        _elm_lang$core$Native_Utils.Tuple0));
-            });
-        }
+    function dir(value, options) {
+        return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
+            console.dir(value, options);
+            return callback(
+                _elm_lang$core$Native_Scheduler.succeed(
+                    _elm_lang$core$Native_Utils.Tuple0));
+        });
     }
 
     function info(value) {
@@ -75,7 +73,7 @@ var _richard_gebbia$elm_node_console$Native_Console = (function () {
     }
 
     return {
-        dir: dir,
+        dir: F2(dir),
         error: error,
         info: info,
         log: log,
