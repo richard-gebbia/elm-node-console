@@ -1,10 +1,17 @@
-module Console exposing (dir, dirWithOptions, DirOptions, defaultDirOptions, elmDir, elmDirWithOptions, error, errorAndFail, info, log, time, timeEnd, warn, warnAndFail)
+module Console exposing (dir, dirWithOptions, DirOptions, defaultDirOptions, elmDir, elmDirWithOptions, error, errorAndFail, info, log, time, timeEnd, trace, warn, warnAndFail)
 
 import Native.Console
 import Json.Encode as Encode
 import Task exposing (Task)
 
 
+{-|
+Options that can be supplied to `dirWithOptions` that will change how the value will be printed.
+The options are:
+    * showHidden - shows any hidden properties on the value (default False)
+    * depth - how many levels of nested objects deep to show; a value of Nothing implies "infinite" depth (default Just 2)
+    * colors - whether or not to color values depending on their type
+-}
 type alias DirOptions =
     { showHidden : Bool
     , depth : Maybe Int
@@ -21,6 +28,9 @@ encodeDirOptions { showHidden, depth, colors } =
         ]
 
 
+{-|
+A constant object containing the default options for the `dir` function.
+-}
 defaultDirOptions : DirOptions
 defaultDirOptions =
     { showHidden = False
@@ -100,16 +110,29 @@ log value =
     Native.Console.log value
 
 
+{-|
+Starts a timer with a given label. Upon sending a `timeEnd` Task to the Elm runtime with the same label,
+the console will print the amount of time that has passed since this task was initiated.
+-}
 time : String -> Task Never ()
 time label =
     Native.Console.time label
 
 
+{-|
+Ends a timer with a given label. If a `time` Task was previously sent to the Elm runtime with the same
+label, running this Task will cause the console to print the amount of time that has passed since that
+Task ran.
+-}
 timeEnd : String -> Task Never ()
 timeEnd label =
     Native.Console.timeEnd label
 
 
+{-|
+Writes a Javascript stack trace to the console with a message. I'm not actually sure why you'd use this
+function unless you were in some hairy debugging scenario and needed to debug Elm's javascript output.
+-}
 trace : String -> Task Never ()
 trace message =
     Native.Console.trace message
