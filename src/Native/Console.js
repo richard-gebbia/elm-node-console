@@ -1,5 +1,14 @@
 var _richard_gebbia$elm_node_console$Native_Console = (function () {
 
+    function assert(value, message) {
+        return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
+            console.assert(value, message);
+            return callback(
+                _elm_lang$core$Native_Scheduler.succeed(
+                    _elm_lang$core$Native_Utils.Tuple0));
+        });
+    }
+
     function dir(value, options) {
         return _elm_lang$core$Native_Scheduler.nativeBinding(function (callback) {
             console.dir(value, options);
@@ -73,6 +82,7 @@ var _richard_gebbia$elm_node_console$Native_Console = (function () {
     }
 
     return {
+        assert: F2(dir),
         dir: F2(dir),
         error: error,
         info: info,

@@ -6,6 +6,30 @@ import Task exposing (Task)
 
 
 {-|
+Given a boolean value, throws an JS exception if false. The exception is printed with a supplied message as well.
+-}
+assert : Bool -> String -> Task Never ()
+assert value message =
+    Native.Console.assert value message
+
+
+{-|
+Like `assert` except that the Task will fail with an error value if the assertion fails.
+-}
+assertAndFailIfFalse : Bool -> String -> x -> Task x ()
+assertAndFailIfFalse value message error =
+    let
+        nextTask _ =
+            if value then
+                Task.succeed ()
+            else
+                Task.fail error
+    in
+        assert value
+            |> Task.andThen nextTask
+
+
+{-|
 Options that can be supplied to `dirWithOptions` that will change how the value will be printed.
 The options are:
     * showHidden - shows any hidden properties on the value (default False)
