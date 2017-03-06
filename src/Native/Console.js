@@ -82,7 +82,7 @@ var _richard_gebbia$elm_node_console$Native_Console = (function () {
     }
 
     return {
-        assert: F2(dir),
+        assert: F2(assert),
         dir: F2(dir),
         error: error,
         info: info,

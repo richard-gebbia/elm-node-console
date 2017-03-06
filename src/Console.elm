@@ -1,4 +1,22 @@
-module Console exposing (dir, dirWithOptions, DirOptions, defaultDirOptions, elmDir, elmDirWithOptions, error, errorAndFail, info, log, time, timeEnd, trace, warn, warnAndFail)
+module Console
+    exposing
+        ( assert
+        , dir
+        , dirWithOptions
+        , DirOptions
+        , defaultDirOptions
+        , elmDir
+        , elmDirWithOptions
+        , error
+        , errorAndFail
+        , info
+        , log
+        , time
+        , timeEnd
+        , trace
+        , warn
+        , warnAndFail
+        )
 
 import Native.Console
 import Json.Encode as Encode
@@ -7,26 +25,11 @@ import Task exposing (Task)
 
 {-|
 Given a boolean value, throws an JS exception if false. The exception is printed with a supplied message as well.
+Note that if the value is false, your program will immediately terminate after this task is run.
 -}
 assert : Bool -> String -> Task Never ()
 assert value message =
     Native.Console.assert value message
-
-
-{-|
-Like `assert` except that the Task will fail with an error value if the assertion fails.
--}
-assertAndFailIfFalse : Bool -> String -> x -> Task x ()
-assertAndFailIfFalse value message error =
-    let
-        nextTask _ =
-            if value then
-                Task.succeed ()
-            else
-                Task.fail error
-    in
-        assert value
-            |> Task.andThen nextTask
 
 
 {-|
